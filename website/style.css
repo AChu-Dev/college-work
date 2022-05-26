@@ -1,0 +1,57 @@
+body{
+    background-image: linear-gradient(to bottom right,dodgerblue,royalblue , darkblue);
+    
+}
+
+h1{
+    color:#0c0b13;
+    font-family: David;
+    font-size: 4em;
+    border: 5px black;
+    text-align: left;
+}
+
+button:hover{
+    background-color: darkgrey;
+
+}
+
+button:active{
+    background-color: dimgrey;
+}
+button{
+    
+    width: 99vw;
+    height: 15vh;
+    background-image: linear-gradient(to bottom right,darkblue,royalblue , dodgerblue);
+    border: solid darkslategrey 0.5em;
+    color: white;
+    cursor: pointer;
+    font-family: david;
+    font-size: 3vw;
+    align-items: center;
+}
+li:hover{
+    background-image:linear-gradient(cornsilk,cornsilk);
+    background-color: white;
+
+}
+
+button:hover{
+    color: lightgreen;
+}
+input{
+    font-family: david;
+    height: 15vh;
+    width: 99vw;
+    font-size: 3vw;
+    border: solid darkslategrey 0.5em;
+    
+}
+p{
+    font-family: david;
+    font-size: 2em;
+    color: white;
+    background-color: grey;
+    border: 3px black;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<HTML>
+    <head></head>
+    
+    <body onload="annPopUp()">
+    
+        <img id="face" src="s1.jpg" width=250; height=250; onmouseover="swapImage()" onmouseout="swapImageBack()">
+        
+        <br>
+        <br>
+        
+        <p>Click in the box below to change colour</p>
+          
+        <input type =  "text" id="inputfield1"
+               onfocus="ccolour()"
+               onblur="ccolourbck()">
+        
+        <br>
+        <br>
+        
+        <button onclick="myPopUpWindow()">CLICK HERE FOR VIRUS REMOVER</button>
+        
+        <br>
+        <br>
+        
+        <button class="abc">left right or middle you decide boy.</button>
+        
+        <script>
+            function swapImage(){
+                document.getElementById("face").src="s2.jpg";
+            }
+            function swapImageBack(){
+                document.getElementById("face").src="s1.jpg";
+            }
+            
+            function ccolour(){
+                document.getElementById("inputfield1").style.backgroundColor="cyan";
+            }
+            function ccolourbck(){
+                 document.getElementById("inputfield1").style.backgroundColor="";
+            }
+            
+            function annPopUp(){
+                window.alert("Your device has a virus please install 55 GB antivirus from avast")
+            }
+            
+            function myPopUpWindow (){
+                window.open("https://www.avast.com/en-gb/free-antivirus-download")
+            }
+            
+            var button = document.querySelector("button.abc");
+            button.addEventListener("mousedown", function(event) {
+                if (event.which == 1)
+                    console.log("left button");
+                else if (event.which == 2)
+                    console.log("middle button");
+                else if (event.which == 3)
+                    console.log("right button");
+            }
+            );
+                                    
+        </script>
+        <br>
+    </body>
+</HTML>
