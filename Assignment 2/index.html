@@ -1,0 +1,393 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8"/>
+	<title>TEST</title>
+    <script src="phaser.js"></script>
+</head>
+<body>
+<script>
+
+var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, '', { preload: preload, create: create, update: update/*, render: render*/});
+    
+    
+var sprite;
+var bullet;
+var cursors;
+var fireButton;
+var bullspeed = 350 + Math.floor(Math.random() * Math.floor(100)) * 2 +50;
+var firerate = 100;
+var ledge;
+var platforms;
+var sprite_health = Math.floor(Math.random() * Math.floor(900)) * 1.5 + 700;
+//var sprite_health = 99999999999999999999999;
+var tromps;
+var healthtxt;
+var trompcount = Math.floor(Math.random() * Math.floor(20)) +10;
+var tromptxt;
+var wavecount = 1;
+var Extratxt;
+var tacos;
+var tacocount = 0;
+var rand;
+var healthitem = 0;
+var bullcount = Math.floor(Math.random() * Math.floor(5)) * 5 + 10;
+var NewWCITM = 0;
+var bullcounttxt;
+var tromp1, tromp2, talk;
+var lazor1, lazor2, lazor3;
+var ran = 2;
+
+function preload(){
+    game.load.image('spaceship', 'assets/spaceship.1.png');
+    game.load.image('bullet', 'assets/playerlaser.png',);
+    game.load.image('enemyBullet', 'assets/enemylaser.png',);
+    game.load.image('tromp', 'assets/tromp.png');
+    game.load.image('healthup', 'assets/taco.png');
+    game.load.audio('tromp1' , 'assets/tromp1.mp3');
+    game.load.audio('tromp2' , 'assets/tromp2.mp3');
+    game.load.audio('lazor1' , 'assets/lazor1.mp3');
+    game.load.audio('lazor2' , 'assets/lazor2.mp3');
+    game.load.audio('lazor3' , 'assets/lazor3.mp3');
+    
+}
+function create() {
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    sprite = game.add.sprite(game.world.randomX, game.world.randomY, 'spaceship');
+    game.physics.arcade.enable(sprite);
+    sprite.enableBody= true; 
+    game.camera.follow(sprite);
+    sprite.scale.setTo(0.2,0.2);
+    sprite.body.drag.set(70);
+    sprite.body.maxVelocity.set(400);
+    sprite.body.collideWorldBounds = true;
+    sprite.anchor.set(0.5);
+    sprite.physicsBodyType = Phaser.Physics.ARCADE;
+    sprite.body.setSize(300, 500, 200, 55);
+    
+    bullet = game.add.weapon(bullcount, 'bullet');
+    bullet.setBulletFrames(0, 60, true);
+    bullet.bulletSpeed = bullspeed;
+    bullet.fireRate = firerate;
+    bullet.trackSprite(sprite, 30 , 0 , true);
+    cursors = this.input.keyboard.createCursorKeys();
+    bullet.enableBody = true;
+    bullet.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+    bullet.bulletAngleVariance = 10;
+    
+    fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+    
+    healthtxt= game.add.text(16, 16, 'Health: ' +sprite_health, { fontSize: '32px', fill: '#FFFFFF' });
+    tromptxt = game.add.text(game.width- 290, 16, 'Tromps Left: '+trompcount, {fontSize: '32px', fill:'#FFFFFF'});
+    Extratxt = game.add.text(window.innerWidth/2 -130, window.innerHeight/2,"Wave: "+ wavecount, {fontSize: '64px', fill:'#FFFFFF'});
+    bullcounttxt= game.add.text(window.innerWidth/2 - 150, 16, "Max Ammo: "+bullcount , {fontSize: '32px', fill:'#FFFFFF'});
+    ammocount();
+    
+    tacos = game.add.group();
+    tacos.enableBody = true;
+    tacos.physicsBodyType = Phaser.Physics.ARCADE;
+    tacos.bounce = 1.5;
+    
+    tromps = game.add.group();
+    tromps.enableBody = true;
+    tromps.physicsBodyType = Phaser.Physics.ARCADE;
+    tromps.bounce = 1.5;
+    
+    for(var i = 0; i < trompcount; i++){
+        var tromp = tromps.create(game.world.randomX -100, game.world.randomY - 100, 'tromp');
+        var rand = Math.random() / 3 + 0.2;
+        tromp.scale.setTo(rand, rand);
+        tromp.body.collideWorldBounds = true;
+    }         
+    tromp1 = game.add.audio('tromp1');
+    tromp2 = game.add.audio('tromp2');
+    lazor1 = game.add.audio('lazor1');
+    lazor2 = game.add.audio('lazor2');
+    lazor3 = game.add.audio('lazor3');
+    
+    tromp2.volume = 0.21;
+    tromp1.volume = 0.22;
+    lazor3.volume = 0.32;
+}
+ 
+function update() {
+    var gamepads = navigator.getGamepads();
+    if (gamepads[0] != null || gamepads[1] != null || gamepads[2] != null || gamepads[3] != null) {
+        var gamepad1 =      gamepads[0];
+        var rightPadDown =  gamepad1.buttons[0];
+        var rightPadRight = gamepad1.buttons[1];
+        var rightPadLeft =  gamepad1.buttons[2];
+        var rightPadUp =    gamepad1.buttons[3];
+        var leftBump =      gamepad1.buttons[4];
+        var rightBump =     gamepad1.buttons[5];
+        var leftTrig =      gamepad1.buttons[6];
+        var rightTrig =     gamepad1.buttons[7];
+        var leftMenu =      gamepad1.buttons[8];
+        var rightMenu =     gamepad1.buttons[9];
+        var leftStickIn =   gamepad1.buttons[10];
+        var rightStickIn =  gamepad1.buttons[11];
+        var leftPadUp =     gamepad1.buttons[12];
+        var leftPadDown =   gamepad1.buttons[13];
+        var leftPadLeft =   gamepad1.buttons[14];
+        var leftPadRight =  gamepad1.buttons[15];
+        var middleMenu =    gamepad1.buttons[16];
+        var leftStickX =    gamepad1.axes[0];
+        var leftStickY =    gamepad1.axes[1];
+        var rightStickX =   gamepad1.axes[2];
+        var rightStickY =   gamepad1.axes[3];
+    
+    
+        //Strafe
+        if (game.input.keyboard.isDown(Phaser.Keyboard.A) ||  leftBump.pressed)
+        {
+            sprite.body.acceleration.x =-200;
+            //console.log('left');
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.D) || rightBump.pressed)
+        {
+            sprite.body.acceleration.x =+200;
+           // console.log('right');
+        }
+        //Thrust
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.W) || rightPadDown.pressed)
+        {
+            game.physics.arcade.accelerationFromRotation(sprite.rotation, 250, sprite.body.acceleration);
+            //console.log('Thrust');
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.S) || leftStickY > 0.05 )
+        {
+            game.physics.arcade.accelerationFromRotation(sprite.rotation, -250, sprite.body.acceleration);
+            //console.log('Reverse');
+        }
+        else
+        {
+            sprite.body.acceleration.set(0);
+        }
+        //Roll
+        if (game.input.keyboard.isDown(Phaser.Keyboard.Q) || LeftStickX < -0.05)
+        {
+            sprite.body.angularVelocity = -300;
+            //console.log('Lroll');
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.E) || leftStickX > 0.05)
+        {    
+            sprite.body.angularVelocity = 300;
+            //console.log('Rroll');
+        }
+        else
+        {
+          sprite.body.angularVelocity = 0;
+        }
+        if (fireButton.isDown || rightTrig.pressed)
+        {
+            bullet.fire();
+            lazor3.play();
+            
+            //console.log('firing');
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.F) || rightPadRight.pressed & sprite.body.acceleration.y === 0){
+            sprite.body.acceleration.y = 0;
+            //console.log('stopped');
+        }
+        if (game.input.keyboard.isDown(Phaser.Keyboard.ESC) || rightMenu.pressed){
+            togglePause()
+        }
+    }
+    
+    else
+    {
+        //Strafe
+        if (game.input.keyboard.isDown(Phaser.Keyboard.A))
+        {
+            sprite.body.acceleration.x =-200;
+            //console.log('left');
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.D))
+        {
+            sprite.body.acceleration.x =+200;
+            //console.log('right');
+        }
+        //Thrust
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.W))
+        {
+            game.physics.arcade.accelerationFromRotation(sprite.rotation, 250, sprite.body.acceleration);
+            //console.log('Thrust');
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
+        {
+            game.physics.arcade.accelerationFromRotation(sprite.rotation, -250, sprite.body.acceleration);
+            //console.log('Reverse');
+        }
+        else
+        {
+            sprite.body.acceleration.set(0);
+        }
+        //Roll
+        if (game.input.keyboard.isDown(Phaser.Keyboard.Q))
+        {
+            sprite.body.angularVelocity = -300;
+           // console.log('Lroll');
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.E))
+        {    
+            sprite.body.angularVelocity = 300;
+            //console.log('Rroll');
+        }
+        else
+        {
+          sprite.body.angularVelocity = 0;
+        }
+        if (fireButton.isDown)
+        {
+            bullet.fire();
+            lazor3.play();
+            //console.log('firing');
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.F) & sprite.body.acceleration.y === 0){
+            sprite.body.acceleration.y = 0;
+            //console.log('stopped');
+        }
+         if (game.input.keyboard.isDown(Phaser.Keyboard.ESC)){
+            togglePause()
+        }
+    }
+    //game.debug.body(sprite);
+    
+    game.physics.arcade.overlap(sprite, tromps, spritehealth, null, this);
+    game.physics.arcade.overlap(bullet.bullets, tromps, trompkill, null, this);
+    game.physics.arcade.overlap(sprite, tacos, spritehealthup, null, this);
+    
+    tromps.forEach(moveprocedure, this)
+    if (trompcount <= 0){
+        //console.log("die");
+        trompcount = Math.floor(Math.random() * Math.floor(20)) +10;
+        wavecount = wavecount + 1;
+        game.time.events.add(Phaser.Timer.SECOND * 2, updateCounter, this);
+        //wavecount = wavecount + 1;
+        game.time.events.add(Phaser.Timer.SECOND * 6, updateCounter2, this);
+}
+    rand = Math.floor(Math.random() * Math.floor(2));
+    //console.log (rand);
+    
+    if (rand == 1 && tacocount == 0 && healthitem == 1){
+    tacospawn()    
+    //console.log('tacospawn')
+    }
+    else{
+        //console.log('test')
+    }
+}
+function tacospawn(){
+    tacocount = 1;
+    //console.log(tacocount)
+    var taco = tacos.create(game.world.randomX -100, game.world.randomY - 100, 'healthup');
+    taco.scale.setTo(0.125, 0.125);
+    taco.body.collideWorldBounds = true;
+}
+function spritehealth(sprite, tromp){
+    //console.log("boom");
+    sprite_health = sprite_health - 1;
+    if (sprite_health <= 0){
+        healthtxt.text = ('Health: 0');
+        sprite.kill();
+        Extratxt.text = ('Waves Achieved: ' + wavecount);
+    }
+    else{
+        healthtxt.text = ('Health: '+ sprite_health);
+    }
+}
+function spritehealthup(sprite, taco){
+    //console.log('health dep')
+    tacocount = 0;
+    sprite_health = sprite_health + (Math.floor(Math.random() * Math.floor(400))) + 200;
+    healthtxt.text = ('Health: '+ sprite_health);
+    taco.kill();
+    healthitem = 0;
+    var poop = (Math.floor(Math.random() * Math.floor(20)) + 40);
+    //console.log('poop '+poop);
+    game.time.events.add(Phaser.Timer.SECOND * poop, updateCounter3, this);
+    //console.log('surestart');
+}
+function trompkill(bullet, tromp){
+    var tromphealth= Math.floor(Math.random() * Math.floor(20)) * wavecount;
+    //console.log('dead tromp'+ tromphealth);
+    tromphealth = tromphealth - 1 ;
+    if (tromphealth <=0){
+        tromp.kill()
+        trompcount=trompcount-1;
+        tromptxt.text = ('Tromps Left: '+ trompcount);
+    }
+}
+function moveprocedure(tromp){
+        var TrompMov = Math.floor(Math.random() * Math.floor(2)) + 1;
+        var Mod = 0.02;
+        //console.log(TrompMov)
+        if(TrompMov == 1){
+            tromp.body.acceleration.y = Math.floor(Math.random() * Math.floor(100)) +50 * window.innerHeight * Mod;
+           //console.log(tromp.body.acceleration.y + Poop)
+            tromp.body.acceleration.x = Math.floor(Math.random() * Math.floor(100)) + 50 * window.innerWidth * Mod;
+        }
+        else if (TrompMov == 2){
+            tromp.body.acceleration.x = Math.floor(Math.random() * Math.floor(-100)) - 50 * window.innerWidth * Mod;
+            tromp.body.acceleration.y = Math.floor(Math.random() * Math.floor(-100)) - 50 * window.innerHeight * Mod;
+           // console.log(tromp.body.acceleration.y + "Yeet")
+        }
+        else if (TrompMov == 3){
+            tromp.body.acceleration.x.y = 0;
+            trompnoise();
+            
+        }
+    }
+function trompRespawn(trompcount){
+    for(var i = 0; i < trompcount; i++){
+        var tromp = tromps.create(game.world.randomX -100, game.world.randomY - 100, 'tromp');
+        var rand = Math.random() / 3 + 0.2;
+        tromp.scale.setTo(rand, rand);
+        tromp.body.collideWorldBounds = true;
+    }
+}
+function updateCounter(){
+    var NewWC = wavecount;
+    Extratxt.text = ('      Wave: '+ NewWC);
+    game.time.events.add(Phaser.Timer.SECOND *  Math.floor(Math.random() * Math.floor(20)) + 40, updateCounter4, this);
+    //game.add.tween(Extratxt).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+    if (NewWCITM == 0){
+    game.time.events.add(Phaser.Timer.SECOND *  Math.floor(Math.random() * Math.floor(20)) + 40, updateCounter3, this);
+    //console.log('surestart');
+    NewWCITM = 1;
+}
+}
+function updateCounter2(){
+    trompRespawn(trompcount);
+}
+function updateCounter3(){
+    healthitem = 1; 
+    //console.log('sure');
+}
+function updateCounter4(){
+    console.log('fyuck')
+    trompnoise();
+}
+function ammocount(){
+    bullcounttxt.txt = ('Max Ammo: ' + bullcount);
+}
+function trompnoise(){
+    
+    if (ran == 1){
+        tromp1.play();
+        //console.log('trompsund');
+        ran = 2;
+    }
+    else if(ran == 2){
+        tromp2.play();
+        //console.log('trompsund2');
+        ran = 1;
+    }
+    }
+function togglePause() {
+    game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
+}
+
+</script>
+</body>
+</html>

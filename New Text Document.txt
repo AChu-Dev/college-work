@@ -1,0 +1,468 @@
+#pragma once
+#include "machine.h"
+#include <iostream>
+#include <algorithm>
+#include <ctime>
+#include <cstdlib>
+#include <stdlib.h>
+#include <iomanip>  
+
+using namespace std;
+Banker y;
+
+Banker::Banker() {
+}
+
+float Machine::input_Money(float curr) {
+	ten_pence = 0, twenty_pence = 0, fifty_pence = 0, pound = 0;
+	cout << "Input coins in this order : 10p's, 20p's, 50p's, Pound Coins: ";
+	cin >> ten_pence >> twenty_pence >> fifty_pence >> pound;
+	curr = curr + (ten_pence * 0.10) + (twenty_pence * 0.20) + (fifty_pence * 0.50) + pound;
+	cout << curr;
+	return curr;
+}
+
+
+float Machine::output_Money(float curr) {
+	cout << "I will now calculate your outputted money: ";
+	a = curr * 10;
+	cout << a << "* 10p's Have Been Outputted";
+	curr = 0;
+	return curr;
+}
+
+void Machine::nudge_Fun(int a) {
+	
+}
+
+Machine::Machine() {
+	srand(time(NULL));
+	attract_Mode();
+	spin_Reels();
+}
+
+
+void Machine::attract_Mode() {
+	system("cls");
+	cout << "======================================================================" << endl;
+	cout << "=                                                                    =" << endl;
+	cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+	cout << "=				    JackPot:  ";
+	std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+	cout << "=                                             ------------  =" << endl;
+	cout << "=                                     Money:  ";
+	std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+	cout << "=                                             ------------          =" << endl;
+	cout << "=                                                                   =" << endl;
+	cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+	cout << "=                                                                   =" << endl;
+	cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+	cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+	cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+	cout << "=                                                                    =" << endl;
+	cout << "======================================================================" << endl;
+}
+
+void Machine::spin_Reels() {
+	string reel_1[] = { "Orange", "Melon ", "   7  ", "Orange", "Orange", "   7  ", "Melon " };
+	string reel_2[] = { "   7  ", "Melon ", "   7  ", "Melon ", "Melon ", "Orange", "Melon " };
+	string reel_3[] = { "   7  ", "Orange", "Orange", "   7  ", "Melon ", "Melon ", "Orange" };
+	bool run = FALSE;
+
+	while (TRUE) {
+		nud_HLD = rand() % 17;
+		if (nud_HLD >= 14 && run == TRUE) {
+			nudgecount = rand() % 3;
+			system("cls");
+			cout << "======================================================================" << endl;
+			cout << "=                                                                    =" << endl;
+			cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+			cout << "=				    JackPot:  ";
+			std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+			cout << "=                                             ------------  =" << endl;
+			cout << "=                                     Money:  ";
+			std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+			cout << "=                                             ------------          =" << endl;
+			cout << "=                                                                   =" << endl;
+			cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+			cout << "=                                                                   =" << endl;
+			cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+			cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+			cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+			cout << "=                                                                    =" << endl;
+			cout << "======================================================================" << endl;
+			cout << "1 is Hold and 0 is Not Held." << endl << "Please Select which Reels to hold: ";
+			cin >> hLD1 >> hLD2 >> hLD3;
+			while (nudgecount > 1) {
+				if (hLD1 == 1 && hLD2 == 1 && hLD3 == 1 && nudgecount == 3) {
+					system("cls");
+					cout << "======================================================================" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+					cout << "=				    JackPot:  ";
+					std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+					cout << "=                                             ------------  =" << endl;
+					cout << "=                                     Money:  ";
+					std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+					cout << "=                                             ------------          =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+					cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+					cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "======================================================================" << endl;
+					nudgecount = 0;
+				}
+				else if (hLD1 == 1 && hLD2 == 1 && hLD3 == 0 && nudgecount >= 2) {
+					reel_Act3 = (rand() % 7);
+
+					cout << endl;
+
+					top_Row3 = reel_Act3 - 1;
+					top_Row3_ = vector_Correct(top_Row3);
+
+					bot_Row3 = reel_Act3 + 1;
+					bot_Row3_ = vector_Correct(bot_Row3);
+
+					c = reel_3[top_Row3_];
+					f = reel_3[reel_Act3];
+					i = reel_3[bot_Row3_];
+
+					system("cls");
+					cout << "======================================================================" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+					cout << "=				    JackPot:  ";
+					std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+					cout << "=                                             ------------  =" << endl;
+					cout << "=                                     Money:  ";
+					std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+					cout << "=                                             ------------          =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+					cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+					cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "======================================================================" << endl;
+					nudgecount = 0;
+				}
+				else if (hLD1 == 1 && hLD2 == 0 && hLD3 == 0) {
+					reel_Act1 = (rand() % 7);
+
+					cout << endl;
+
+					top_Row1 = reel_Act1 - 1;
+					top_Row1_ = vector_Correct(top_Row1);
+
+					bot_Row3 = reel_Act1 + 1;
+					bot_Row3_ = vector_Correct(bot_Row1);
+
+					c = reel_3[top_Row1_];
+					f = reel_3[reel_Act1];
+					i = reel_3[bot_Row1_];
+
+					system("cls");
+					cout << "======================================================================" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+					cout << "=				    JackPot:  ";
+					std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+					cout << "=                                             ------------  =" << endl;
+					cout << "=                                     Money:  ";
+					std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+					cout << "=                                             ------------          =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+					cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+					cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "======================================================================" << endl;
+					nudgecount = 0;
+				}
+				else if (hLD1 == 0 && hLD2 == 1 && hLD3 == 1 && nudgecount >= 2) {
+					reel_Act2 = (rand() % 7);
+					reel_Act3 = (rand() % 7);
+
+					cout << endl;
+					top_Row2 = reel_Act2 - 1;
+					top_Row2_ = vector_Correct(top_Row2);
+					top_Row3 = reel_Act3 - 1;
+					top_Row3_ = vector_Correct(top_Row3);
+
+					bot_Row2 = reel_Act2 + 1;
+					bot_Row2_ = vector_Correct(bot_Row2);
+					bot_Row3 = reel_Act3 + 1;
+					bot_Row3_ = vector_Correct(bot_Row3);
+
+					b = reel_2[top_Row2_];
+					e = reel_2[reel_Act2];
+					h = reel_2[bot_Row2_];
+					c = reel_3[top_Row3_];
+					f = reel_3[reel_Act3];
+					i = reel_3[bot_Row3_];
+
+					system("cls");
+					cout << "======================================================================" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+					cout << "=				    JackPot:  ";
+					std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+					cout << "=                                             ------------  =" << endl;
+					cout << "=                                     Money:  ";
+					std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+					cout << "=                                             ------------          =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+					cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+					cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "======================================================================" << endl;
+					nudgecount = 0;
+				}
+				else if (hLD1 == 1 && hLD2 == 0 && hLD3 == 1 && nudgecount >= 2) {
+					reel_Act1 = (rand() % 7);
+					reel_Act3 = (rand() % 7);
+
+					cout << endl;
+					top_Row1 = reel_Act1 - 1;
+					top_Row1_ = vector_Correct(top_Row1);
+					top_Row3 = reel_Act3 - 1;
+					top_Row3_ = vector_Correct(top_Row3);
+
+					bot_Row1 = reel_Act1 + 1;
+					bot_Row1_ = vector_Correct(bot_Row1);
+					bot_Row3 = reel_Act3 + 1;
+					bot_Row3_ = vector_Correct(bot_Row3);
+
+					a = reel_1[top_Row1_];
+					d = reel_1[reel_Act1];
+					g = reel_1[bot_Row1_];
+					c = reel_3[top_Row3_];
+					f = reel_3[reel_Act3];
+					i = reel_3[bot_Row3_];
+
+					system("cls");
+					cout << "======================================================================" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+					cout << "=				    JackPot:  ";
+					std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+					cout << "=                                             ------------  =" << endl;
+					cout << "=                                     Money:  ";
+					std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+					cout << "=                                             ------------          =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+					cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+					cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "======================================================================" << endl;
+				}
+				else if (hLD1 == 1 && hLD2 == 1 && hLD3 == 0 && nudgecount >= 2) {
+					reel_Act1 = (rand() % 7);
+					reel_Act2 = (rand() % 7);
+
+					cout << endl;
+					top_Row1 = reel_Act1 - 1;
+					top_Row1_ = vector_Correct(top_Row1);
+					top_Row2 = reel_Act3 - 1;
+					top_Row2_ = vector_Correct(top_Row2);
+
+					bot_Row1 = reel_Act1 + 1;
+					bot_Row1_ = vector_Correct(bot_Row1);
+					bot_Row2 = reel_Act2 + 1;
+					bot_Row2_ = vector_Correct(bot_Row2);
+
+					a = reel_1[top_Row1_];
+					d = reel_1[reel_Act1];
+					g = reel_1[bot_Row1_];
+					c = reel_2[top_Row2_];
+					f = reel_2[reel_Act2];
+					i = reel_2[bot_Row2_];
+
+					system("cls");
+					cout << "======================================================================" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+					cout << "=				    JackPot:  ";
+					std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+					cout << "=                                             ------------  =" << endl;
+					cout << "=                                     Money:  ";
+					std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+					cout << "=                                             ------------          =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+					cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+					cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "======================================================================" << endl;
+					nudgecount = 0;
+				}
+				else if (hLD1 == 0 && hLD2 == 0 && hLD3 == 1) {
+					reel_Act3 = (rand() % 7);
+
+					cout << endl;
+					top_Row1 = reel_Act1 - 1;
+					top_Row1_ = vector_Correct(top_Row1);
+					top_Row3 = reel_Act3 - 1;
+					top_Row3_ = vector_Correct(top_Row3);
+
+					bot_Row1 = reel_Act1 + 1;
+					bot_Row1_ = vector_Correct(bot_Row1);
+					bot_Row3 = reel_Act3 + 1;
+					bot_Row3_ = vector_Correct(bot_Row3);
+
+					a = reel_1[top_Row1_];
+					d = reel_1[reel_Act1];
+					g = reel_1[bot_Row1_];
+					c = reel_3[top_Row3_];
+					f = reel_3[reel_Act3];
+					i = reel_3[bot_Row3_];
+
+					system("cls");
+					cout << "======================================================================" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+					cout << "=				    JackPot:  ";
+					std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+					cout << "=                                             ------------  =" << endl;
+					cout << "=                                     Money:  ";
+					std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+					cout << "=                                             ------------          =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+					cout << "=                                                                   =" << endl;
+					cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+					cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+					cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+					cout << "=                                                                    =" << endl;
+					cout << "======================================================================" << endl;
+				}
+				else {
+					cout << "You cannot use that combination of the HOLD function:"
+						<< endl << "Do you want to not hold?";
+					cin >> hLDY;
+					if (hLDY) {
+						nudgecount = 0;
+					}
+				}
+			}
+		}
+		else {
+			reel_Act1 = (rand() % 7);
+			reel_Act2 = (rand() % 7);
+			reel_Act3 = (rand() % 7);
+
+			cout << endl;
+
+			top_Row1 = reel_Act1 - 1;
+			top_Row2 = reel_Act2 - 1;
+			top_Row3 = reel_Act3 - 1;
+			top_Row1_ = vector_Correct(top_Row1);
+			top_Row2_ = vector_Correct(top_Row2);
+			top_Row3_ = vector_Correct(top_Row3);
+
+			bot_Row1 = reel_Act1 + 1;
+			bot_Row2 = reel_Act2 + 1;
+			bot_Row3 = reel_Act3 + 1;
+			bot_Row1_ = vector_Correct(bot_Row1);
+			bot_Row2_ = vector_Correct(bot_Row2);
+			bot_Row3_ = vector_Correct(bot_Row3);
+
+			a = reel_1[top_Row1_];
+			b = reel_2[top_Row2_];
+			c = reel_3[top_Row3_];
+			d = reel_1[reel_Act1];
+			e = reel_2[reel_Act2];
+			f = reel_3[reel_Act3];
+			g = reel_1[bot_Row1_];
+			h = reel_2[bot_Row2_];
+			i = reel_3[bot_Row3_];
+
+			system("cls");
+			cout << "======================================================================" << endl;
+			cout << "=                                                                    =" << endl;
+			cout << "=   Nudge Counter:" << nudgecount << "                                =" << endl;
+			cout << "=				    JackPot:  ";
+			std::cout << std::fixed << std::setprecision(2) << jPot << "          =" << endl;
+			cout << "=                                             ------------  =" << endl;
+			cout << "=                                     Money:  ";
+			std::cout << std::fixed << std::setprecision(2) << curr << "          =" << endl;
+			cout << "=                                             ------------          =" << endl;
+			cout << "=                                                                   =" << endl;
+			cout << "=               Press Enter To Spin The Reel!!!                     =" << endl;
+			cout << "=                                                                   =" << endl;
+			cout << "=           " << a << "		" << b << "		" << c << "          =" << endl;
+			cout << "=        ---" << d << "		" << e << "		" << f << "---        =" << endl;
+			cout << "=           " << g << "		" << h << "		" << i << "           =" << endl;
+			cout << "=                                                                    =" << endl;
+			cout << "======================================================================" << endl;
+		}
+
+		if (d == "Orange" && e == "Orange" && f == "Orange") {
+			Machine::curr = Machine::curr + 0.50;
+			jPot = jPot + 0.10;
+			cout << "You Win!!!!" << endl;
+			cout << "50p has been added to your Money" << endl;
+		};
+		if (d == "Melon " && e == "Melon " && f == "Melon ") {
+			Machine::curr == Machine::curr + 1.50;
+			jPot = jPot + 0.10;
+			cout << "You Win!!!!" << endl;
+			cout << "1.50 has been added to your total money" << endl;
+		}
+		if (d == "  7  " && e == "   7  " && f == "   7  ") {
+			Machine::curr = Machine::curr + Machine::jPot;
+			cout << "JACKPOT!!!!!!!!!!!!!" << endl;
+			cout << "Your Total Is: " << Machine::curr << endl;;
+			jPot = 0;
+		}
+		if (curr < 0) {
+			curr = input_Money(curr);
+			jPot = jPot + 0.10;
+		}
+
+		cout << endl;
+		cout << "Please Input a letter based on what you want to do: " << endl << "1: Input Money " << endl << "2: Output Money" << endl << "3: Continue Playing" << endl;			cin >> j;
+		if (j == "1") {
+			curr = input_Money(curr);
+			cout << endl;
+		}
+		else if (j == "2") {
+			curr = output_Money(curr);
+			cout << endl;
+		}
+		if (jPot == 0) {
+			jPot = 5.00;
+		}
+		if (run == FALSE) {
+			run = TRUE;
+		}
+		cin.get();
+	}
+}		
+	
+	int Machine::vector_Correct(int p) {
+	if (p > 6) {
+		return 0;
+		}
+	else if (p < 0) {
+		return 6;
+		}
+	else if (p >= 0 && p <= 6) {
+		return p;
+		}
+	}
+	

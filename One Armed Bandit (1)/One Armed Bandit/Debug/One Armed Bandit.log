@@ -1,0 +1,10 @@
+﻿  machine.cpp
+C:\Users\adamc\Desktop\College Work\One Armed Bandit (1)\One Armed Bandit\machine.cpp(17): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\adamc\Desktop\College Work\One Armed Bandit (1)\One Armed Bandit\machine.cpp(56): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\adamc\Desktop\College Work\One Armed Bandit (1)\One Armed Bandit\machine.cpp(116): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\adamc\Desktop\College Work\One Armed Bandit (1)\One Armed Bandit\machine.cpp(117): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\adamc\Desktop\College Work\One Armed Bandit (1)\One Armed Bandit\machine.cpp(122): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\adamc\Desktop\College Work\One Armed Bandit (1)\One Armed Bandit\machine.cpp(123): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\adamc\Desktop\College Work\One Armed Bandit (1)\One Armed Bandit\machine.cpp(148): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\adamc\Desktop\College Work\One Armed Bandit (1)\One Armed Bandit\machine.cpp(164): warning C4715: 'Machine::vector_Correct': not all control paths return a value
+  One Armed Bandit.vcxproj -> C:\Users\adamc\Desktop\College Work\One Armed Bandit (1)\Debug\OneArmedBandit.exe

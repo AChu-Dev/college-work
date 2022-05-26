@@ -1,0 +1,21 @@
+All numbers are in hex
+9 = OPCODE For Input / Output
+1 = OPERAND for Input 
+
+91 = Input
+31 = Save Accumulator Value to Ram 01
+91 = Input (Accumulator is overwritten)
+30 = Save Accumulator Value to Ram 00
+91 = Input (Accumulator is overwritten)
+32 = Save Accumulator to Ram 02
+52 = Load Ram 02 into the Acculumlator
+79 = Branch into Ram 09 if the Acculumlator == 0
+8d =  Branch into Ram 0d if the Acculumlator > 0
+51 = Load into Acculumlator Ram 01
+20 = Subtract Acculumlator from Ram 0
+92 = Ouput Acculumlator
+00 = HALT program
+51 = Load into Acculumlator Ram 01
+10 = Add Acculumlator from Ram 0
+92 = Output Acculumlator
+As All Ram cells are used and there isnt any branching it treats it as 00 (halt)
